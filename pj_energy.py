@@ -5,7 +5,7 @@ from pj_mat import PolLineal
 
 def EnergyGraph(ray):
     # energy graph after linear polarizator of I vs. θ
-    theta = np.linspace(0, 360, 500)
+    theta = np.linspace(0, 180, 500)
     T = []
     I = []
     for t in theta:
@@ -20,14 +20,14 @@ def EnergyGraph(ray):
     min_index = I.index(min_i_y, 10, -9)
     min_i_x = T[min_index]
 
-    plt.xlim((0, 360))
-    plt.xticks(range(0, 361, 45))
+    plt.xlim((0, 180))
+    plt.xticks(range(0, 181, 45))
     plt.xlabel('Angulo θ')
     plt.ylabel('Intensidad I')
     plt.title('Rayo a través de pol. lineal')
     plt.plot(T, I, color='tab:orange')
-    plt.plot([0, 360], [max_i_y, max_i_y], ls=':', color='tab:gray')
-    plt.plot([0, 360], [min_i_y, min_i_y], ls=':', color='tab:gray')
+    plt.plot([0, 180], [max_i_y, max_i_y], ls=':', color='tab:gray')
+    plt.plot([0, 180], [min_i_y, min_i_y], ls=':', color='tab:gray')
     ylim = plt.ylim()
     plt.plot([max_i_x, max_i_x], [-10, max_i_y], color='tab:green', ls='--',
                 label='max ({}, {})'.format(round(max_i_x, 2), round(max_i_y.real, 2)))
@@ -38,7 +38,9 @@ def EnergyGraph(ray):
     plt.show()
 
 def GetEnergy(ray):
-    return ray.dot(np.conj(ray)) / 2
+    energy = ray.dot(np.conj(ray)) / 2
+    assert energy.imag == 0
+    return energy.real
 
 if __name__ == '__main__':
     from pj_mat import Ray

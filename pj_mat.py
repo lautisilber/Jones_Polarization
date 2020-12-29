@@ -62,11 +62,14 @@ def Rotation(angle):
         assert False
     alpha = np.radians(angle)
     mat = np.zeros((2, 2), dtype=np.csingle)
-    mat[0][0] = np.cosa(alpha)
+    mat[0][0] = np.cos(alpha)
     mat[0][1] = -np.sin(alpha)
     mat[1][0] = -mat[0][1]
     mat[1][1] = mat[0][0]
     return mat
+
+def Identity():
+    return np.identity(2)
 
 def Solve(*layers):
     layers = list(layers)
@@ -81,11 +84,14 @@ def Graph(ray):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     z = np.linspace(0, 30, 100)
-    X = ray[0]*np.exp(1j*z)
-    Y = ray[1]*np.exp(1j*z)
+    X = ray[0]*np.exp(-1j*z)
+    Y = ray[1]*np.exp(-1j*z)
     ax.plot(X, Y, z)
     ax.set_xlim((-4, 4))
     ax.set_ylim((-4, 4))
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
     plt.show()
 
 def _is_digit(n):
